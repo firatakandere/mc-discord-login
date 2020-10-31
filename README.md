@@ -1,0 +1,13 @@
+## ToDo
+- [ ] Discord connection via JDA.
+- [ ] Permission support (optional).
+- [ ] Register through Discord.
+- [ ] Login with Discord.
+- [ ] Command whitelist for unregistered users.
+- [ ] Prevent player interaction and movement until logged in.
+- [ ] Unregister.
+- [ ] Who's online command for Discord.
+- [ ] Show # of online users / total capacity on Discord Bot's description.
+- [ ] Add configuration for what should be prevented.
+- [ ] i18n.
+- [ ] Bidirectional communication.
