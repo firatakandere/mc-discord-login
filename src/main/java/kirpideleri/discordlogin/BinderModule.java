@@ -4,7 +4,6 @@ import com.google.inject.*;
 import kirpideleri.discordlogin.repositories.user.FileBasedUserRepository;
 import kirpideleri.discordlogin.repositories.user.IUserRepository;
 import kirpideleri.discordlogin.utils.*;
-import net.dv8tion.jda.api.JDA;
 
 public class BinderModule extends AbstractModule {
     private final DiscordLoginPlugin plugin;

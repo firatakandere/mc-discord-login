@@ -122,8 +122,8 @@ public class PreventionListener implements Listener {
     private void onCommand(final PlayerCommandPreprocessEvent e) {
         try {
             String command = extractCommand(e.getMessage());
-            Bukkit.getLogger().info("Whitelist: " + config.GetServerCommandWhitelist().toString());
-            if (config.GetServerCommandWhitelist().contains(command)) {
+            Bukkit.getLogger().info("Whitelist: " + config.getServerCommandWhitelist().toString());
+            if (config.getServerCommandWhitelist().contains(command)) {
                 return;
             }
         } catch (NotFoundException ex) {
@@ -143,7 +143,7 @@ public class PreventionListener implements Listener {
     }
 
     private String extractCommand(final String str) throws NotFoundException {
-        String pattern = "^\\/(\\S+)";
+        String pattern = "^/(\\S+)";
 
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);

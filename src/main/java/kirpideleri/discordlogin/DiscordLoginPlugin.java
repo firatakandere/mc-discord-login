@@ -3,6 +3,7 @@ package kirpideleri.discordlogin;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import kirpideleri.discordlogin.commands.discord.RegisterCommand;
+import kirpideleri.discordlogin.commands.discord.WhoIsOnlineCommand;
 import kirpideleri.discordlogin.listeners.DiscordListener;
 import kirpideleri.discordlogin.listeners.PlayerJoinListener;
 import kirpideleri.discordlogin.listeners.PreventionListener;
@@ -33,6 +34,9 @@ public class DiscordLoginPlugin extends JavaPlugin
     @Inject
     PreventionListener preventionListener;
 
+    @Inject
+    WhoIsOnlineCommand whoisonlineCommand;
+
     @Override
     public void onEnable() {
         BinderModule module = new BinderModule(this);
@@ -57,14 +61,15 @@ public class DiscordLoginPlugin extends JavaPlugin
         Bukkit.getPluginManager().registerEvents(this.preventionListener, this);
         Bukkit.getPluginManager().registerEvents(this.playerJoinListener, this);
 
-        this.discordListener.addCommand("register", this.registerCommand);
+        discordListener.addCommand("register", this.registerCommand);
+        discordListener.addCommand("whoisonline", this.whoisonlineCommand);
     }
 
     private void connectToDiscord() {
-        final JDABuilder jdaBuilder = JDABuilder.createDefault(this.config.GetDiscordBotToken());
+        final JDABuilder jdaBuilder = JDABuilder.createDefault(this.config.getDiscordBotToken());
 
         try {
-            jdaBuilder.setStatus(OnlineStatus.valueOf(this.config.GetDiscordBotOnlineStatus()));
+            jdaBuilder.setStatus(OnlineStatus.valueOf(this.config.getDiscordBotOnlineStatus()));
         } catch (IllegalArgumentException e) {
             jdaBuilder.setStatus(OnlineStatus.ONLINE);
         }

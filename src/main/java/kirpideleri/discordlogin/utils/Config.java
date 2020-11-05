@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Config implements IConfig {
-    private YamlConfiguration ymlConfig;
+    private final YamlConfiguration ymlConfig;
 
     private final String DISCORD_BOT_TOKEN = "Discord.Bot.Token";
     private final String DISCORD_BOT_ONLINE_STATUS = "Discord.Bot.OnlineStatus";
@@ -42,25 +42,25 @@ public class Config implements IConfig {
         }
     }
 
-    public String GetDiscordBotToken() {
-        return this.ymlConfig.getString(DISCORD_BOT_TOKEN);
+    public String getDiscordBotToken() {
+        return ymlConfig.getString(DISCORD_BOT_TOKEN);
     }
 
-    public String GetDiscordBotOnlineStatus() {
-        return this.ymlConfig.getString(DISCORD_BOT_ONLINE_STATUS);
+    public String getDiscordBotOnlineStatus() {
+        return ymlConfig.getString(DISCORD_BOT_ONLINE_STATUS);
     }
 
-    public String GetDiscordBotGuildID() {
-        return this.ymlConfig.getString(DISCORD_BOT_GUILD_ID);
+    public String getDiscordBotGuildID() {
+        return ymlConfig.getString(DISCORD_BOT_GUILD_ID);
     }
 
-    public String GetDiscordCommandPrefix() { return this.ymlConfig.getString(DISCORD_COMMAND_PREFIX); }
+    public String getDiscordCommandPrefix() { return ymlConfig.getString(DISCORD_COMMAND_PREFIX); }
 
-    public String GetDiscordCommandChannelID() { return this.ymlConfig.getString(DISCORD_COMMAND_CHANNEL_ID); }
+    public String getDiscordCommandChannelID() { return ymlConfig.getString(DISCORD_COMMAND_CHANNEL_ID); }
 
-    public String GetDiscordButtonsAccept() { return this.ymlConfig.getString(DISCORD_BUTTONS_ACCEPT); }
+    public String getDiscordButtonsAccept() { return ymlConfig.getString(DISCORD_BUTTONS_ACCEPT); }
 
-    public String GetDiscordButtonsReject() { return this.ymlConfig.getString(DISCORD_BUTTONS_REJECT); }
+    public String getDiscordButtonsReject() { return ymlConfig.getString(DISCORD_BUTTONS_REJECT); }
 
-    public Set<String> GetServerCommandWhitelist() { return new HashSet<>(this.ymlConfig.getStringList(SERVER_COMMAND_WHITELIST)); }
+    public Set<String> getServerCommandWhitelist() { return new HashSet<>(ymlConfig.getStringList(SERVER_COMMAND_WHITELIST)); }
 }

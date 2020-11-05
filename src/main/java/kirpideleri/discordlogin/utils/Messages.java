@@ -7,13 +7,15 @@ import java.io.File;
 import java.util.logging.Level;
 
 public class Messages implements IMessages {
-    private YamlConfiguration ymlConfig;
+    private final YamlConfiguration ymlConfig;
 
     private final String DISCORD_COMMON_INVALID_ARGUMENT_COUNT = "Discord.Common.InvalidArgumentCount";
 
     private final String DISCORD_REGISTRATION_SUCCESS = "Discord.Registration.Success";
     private final String DISCORD_REGISTRATION_FAILURE = "Discord.Registration.Failure";
     private final String DISCORD_REGISTRATION_INVALID_KEY = "Discord.Registration.InvalidKey";
+
+    private final String DISCORD_NO_ONLINE_USERS = "Discord.NoOnlineUsers";
 
     private final String DISCORD_LOGIN_MESSAGE = "Discord.Login.Message";
 
@@ -26,6 +28,7 @@ public class Messages implements IMessages {
         ymlConfig.addDefault(DISCORD_REGISTRATION_FAILURE, "Registration failed, please contact with server admin.");
         ymlConfig.addDefault(DISCORD_REGISTRATION_INVALID_KEY, "Registration key {{key}} is invalid.");
         ymlConfig.addDefault(DISCORD_LOGIN_MESSAGE, "You have just joined {{servername}} with the ip {{ip}}. Use emotes to approve or deny the login.");
+        ymlConfig.addDefault(DISCORD_NO_ONLINE_USERS, "No online users.");
         ymlConfig.options().copyDefaults(true);
         try {
             ymlConfig.save(messagesFile);
@@ -54,5 +57,9 @@ public class Messages implements IMessages {
         return ymlConfig.getString(DISCORD_LOGIN_MESSAGE)
                 .replace("{{servername}}", serverName)
                 .replace("{{ip}}", joinedIpAddress);
+    }
+
+    public String getDiscordNoOnlineUsers() {
+        return ymlConfig.getString(DISCORD_NO_ONLINE_USERS);
     }
 }

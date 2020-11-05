@@ -12,14 +12,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
 public class AccountManager implements IAccountManager {
-    private HashMap<String, UUID> discordRegisterCodes;
-    private HashMap<String, Pair<String, UUID>> awaitingLogins;
+    private final Map<String, UUID> discordRegisterCodes;
+    private final Map<String, Pair<String, UUID>> awaitingLogins;
 
-    private HashMap<UUID, String> loggedInUsers;
+    private final Map<UUID, String> loggedInUsers;
 
     // @todo I really don't like this here.
     @Inject
@@ -40,16 +41,16 @@ public class AccountManager implements IAccountManager {
         awaitingLogins = new HashMap<>(); // discordUserID, (discordMessageID, playerUUID)
     }
 
-    public void InitializePlayer(final Player p) {
+    public void initializePlayer(final Player p) {
         if (userRepository.isRegistered(p.getUniqueId())) {
             try {
-                this.HandleLogin(p);
+                this.handleLogin(p);
             } catch (Exception e) {
                 Bukkit.getLogger().log(Level.SEVERE, "failed", e);
                 // @todo handle this
             }
         } else {
-            this.HandleRegister(p);
+            this.handleRegister(p);
         }
     }
 
@@ -70,10 +71,10 @@ public class AccountManager implements IAccountManager {
     }
 
     public void handleUserReaction(String discordUserID, String discordMessageID, String emote) {
-        if (emote.equals(config.GetDiscordButtonsReject())) {
+        if (emote.equals(config.getDiscordButtonsReject())) {
             awaitingLogins.remove(discordUserID);
         }
-        else if (emote.equals(config.GetDiscordButtonsAccept()) && awaitingLogins.containsKey(discordUserID)) {
+        else if (emote.equals(config.getDiscordButtonsAccept()) && awaitingLogins.containsKey(discordUserID)) {
             Pair<String, UUID> pair = awaitingLogins.get(discordUserID);
             if (pair.getLeft().equals(discordMessageID)) {
                 this.finalizeLogin(discordUserID, pair.getRight());
@@ -83,6 +84,10 @@ public class AccountManager implements IAccountManager {
 
     public boolean isLoggedIn(final Player p) {
         return loggedInUsers.containsKey(p.getUniqueId());
+    }
+
+    public Map<UUID, String> getLoggedInUsers() {
+        return loggedInUsers;
     }
 
     public void handlePlayerQuit(final Player p) {
@@ -97,17 +102,17 @@ public class AccountManager implements IAccountManager {
         awaitingLogins.remove(discordUserID);
     }
 
-    private void HandleRegister(final Player p) {
+    private void handleRegister(final Player p) {
         String registrationCode = assignRegistrationCodeToPlayer(p);
         p.sendMessage("/register " + registrationCode);
     }
 
-    private void HandleLogin(final Player p) throws NotFoundException {
+    private void handleLogin(final Player p) throws NotFoundException {
         String discordID = userRepository.getDiscordID(p.getUniqueId());
 
         // Make sure user is still part of Discord guild
         try {
-            plugin.jda.getGuildById(config.GetDiscordBotGuildID()).retrieveMemberById(discordID).complete();
+            plugin.jda.getGuildById(config.getDiscordBotGuildID()).retrieveMemberById(discordID).complete();
         } catch (Exception ex) {
             return;
         }
@@ -115,8 +120,8 @@ public class AccountManager implements IAccountManager {
         plugin.jda.openPrivateChannelById(discordID).queue(privateChannel -> {
             privateChannel.sendMessage(messages.getDiscordLoginMessage(Bukkit.getName(), p.getAddress().toString())).queue(message -> {
                 awaitingLogins.put(discordID, Pair.of(message.getId(), p.getUniqueId()));
-                message.addReaction(config.GetDiscordButtonsAccept()).queue();
-                message.addReaction(config.GetDiscordButtonsReject()).queue();
+                message.addReaction(config.getDiscordButtonsAccept()).queue();
+                message.addReaction(config.getDiscordButtonsReject()).queue();
             });
         });
     }

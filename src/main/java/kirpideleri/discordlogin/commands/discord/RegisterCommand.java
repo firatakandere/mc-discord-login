@@ -26,7 +26,7 @@ public class RegisterCommand implements IDiscordCommand {
             accountManager.registerPlayer(args[0], e.getAuthor().getId());
             e.getChannel().sendMessage(messages.getDiscordRegistrationSuccess(e.getAuthor().getId())).queue();
         } catch (RegisterUserException registerUserException) {
-            e.getChannel().sendMessage(messages.getDiscordRegistrationFailure());
+            e.getChannel().sendMessage(messages.getDiscordRegistrationFailure()).queue();
         } catch (RegistrationKeyNotFoundException registrationKeyNotFoundException) {
             e.getChannel().sendMessage(messages.getDiscordRegistrationInvalidKey(args[0])).queue();
         }

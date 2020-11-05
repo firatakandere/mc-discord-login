@@ -15,7 +15,7 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onPlayerJoin(final PlayerJoinEvent e) {
-        this.accountManager.InitializePlayer(e.getPlayer());
+        this.accountManager.initializePlayer(e.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

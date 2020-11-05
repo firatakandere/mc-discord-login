@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class DiscordListener extends ListenerAdapter {
-    private HashMap<String, IDiscordCommand> commands;
+    private final HashMap<String, IDiscordCommand> commands;
 
     public DiscordListener() {
-        this.commands = new HashMap<>();
+        commands = new HashMap<>();
     }
 
     @Inject
@@ -34,13 +34,15 @@ public class DiscordListener extends ListenerAdapter {
         if (e.getAuthor().isBot()) {
             return; // Ignore bot messages
         }
-        if (!e.getGuild().getId().equals(this.config.GetDiscordBotGuildID())) {
+        if (!e.getGuild().getId().equals(config.getDiscordBotGuildID())) {
             return; // Make sure guild ids match
         }
 
-        if (!e.getChannel().getId().equals(this.config.GetDiscordCommandChannelID()));
+        if (!e.getChannel().getId().equals(config.getDiscordCommandChannelID())) {
+            return; // Make sure correct channel is used.
+        }
 
-        final String prefix = this.config.GetDiscordCommandPrefix();
+        final String prefix = config.getDiscordCommandPrefix();
         String message = e.getMessage().getContentDisplay().trim();
 
         if (!message.startsWith(prefix)) {
