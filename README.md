@@ -1,9 +1,9 @@
 ## ToDo
-- [*] Discord connection via JDA.
+- [x] Discord connection via JDA.
 - [ ] Permission support (optional).
-- [*] Register through Discord.
-- [*] Login with Discord.
-- [*] Command whitelist for unregistered users.
+- [x] Register through Discord.
+- [x] Login with Discord.
+- [x] Command whitelist for unregistered users.
 - [ ] Prevent player interaction and movement until logged in.
 - [ ] Unregister.
 - [ ] Who's online command for Discord.
