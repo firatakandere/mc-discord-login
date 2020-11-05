@@ -16,7 +16,7 @@ import java.util.logging.Level;
 
 public class DiscordLoginPlugin extends JavaPlugin
 {
-    private JDA jda;
+    public JDA jda;
 
     @Inject
     private IConfig config;
@@ -30,14 +30,17 @@ public class DiscordLoginPlugin extends JavaPlugin
     @Inject
     RegisterCommand registerCommand;
 
+    @Inject
+    PreventionListener preventionListener;
+
     @Override
     public void onEnable() {
         BinderModule module = new BinderModule(this);
         Injector injector = module.createInjector();
         injector.injectMembers(this);
 
-        this.registerEvents();
         this.connectToDiscord();
+        this.registerEvents();
         getLogger().info("DiscordLogin is enabled.");
     }
 
@@ -51,7 +54,7 @@ public class DiscordLoginPlugin extends JavaPlugin
     }
 
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(new PreventionListener(), this);
+        Bukkit.getPluginManager().registerEvents(this.preventionListener, this);
         Bukkit.getPluginManager().registerEvents(this.playerJoinListener, this);
 
         this.discordListener.addCommand("register", this.registerCommand);

@@ -5,4 +5,5 @@ public interface IMessages {
     String getDiscordRegistrationFailure();
     String getDiscordRegistrationInvalidKey(String registrationKey);
     String getDiscordCommonInvalidArgumentCount(int expectedArgumentCount);
+    String getDiscordLoginMessage(String serverName, String joinedIpAddress);
 }

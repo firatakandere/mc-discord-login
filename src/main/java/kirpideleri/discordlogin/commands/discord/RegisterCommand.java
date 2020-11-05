@@ -23,11 +23,10 @@ public class RegisterCommand implements IDiscordCommand {
             return;
         }
         try {
-            this.accountManager.registerPlayer(args[0], e.getAuthor().getId());
+            accountManager.registerPlayer(args[0], e.getAuthor().getId());
             e.getChannel().sendMessage(messages.getDiscordRegistrationSuccess(e.getAuthor().getId())).queue();
         } catch (RegisterUserException registerUserException) {
             e.getChannel().sendMessage(messages.getDiscordRegistrationFailure());
-            registerUserException.printStackTrace();
         } catch (RegistrationKeyNotFoundException registrationKeyNotFoundException) {
             e.getChannel().sendMessage(messages.getDiscordRegistrationInvalidKey(args[0])).queue();
         }
