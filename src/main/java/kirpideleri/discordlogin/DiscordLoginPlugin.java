@@ -7,6 +7,7 @@ import kirpideleri.discordlogin.commands.discord.WhoIsOnlineCommand;
 import kirpideleri.discordlogin.listeners.DiscordListener;
 import kirpideleri.discordlogin.listeners.PlayerJoinListener;
 import kirpideleri.discordlogin.listeners.PreventionListener;
+import kirpideleri.discordlogin.utils.AccountManager;
 import kirpideleri.discordlogin.utils.IConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -37,6 +38,9 @@ public class DiscordLoginPlugin extends JavaPlugin
     @Inject
     WhoIsOnlineCommand whoisonlineCommand;
 
+    @Inject
+    AccountManager accountManager;
+
     @Override
     public void onEnable() {
         BinderModule module = new BinderModule(this);
@@ -45,6 +49,8 @@ public class DiscordLoginPlugin extends JavaPlugin
 
         this.connectToDiscord();
         this.registerEvents();
+
+        accountManager.onEnable();
         getLogger().info("DiscordLogin is enabled.");
     }
 

@@ -6,6 +6,7 @@ import kirpideleri.discordlogin.exceptions.NotFoundException;
 import kirpideleri.discordlogin.exceptions.RegisterUserException;
 import kirpideleri.discordlogin.exceptions.RegistrationKeyNotFoundException;
 import kirpideleri.discordlogin.repositories.user.IUserRepository;
+import net.dv8tion.jda.api.entities.Activity;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
@@ -39,6 +40,11 @@ public class AccountManager implements IAccountManager {
         discordRegisterCodes = new HashMap<>();
         loggedInUsers = new HashMap<>(); // playerUUID, discordUserID
         awaitingLogins = new HashMap<>(); // discordUserID, (discordMessageID, playerUUID)
+    }
+
+    // @todo any better way?
+    public void onEnable() {
+        refreshBotStatus();
     }
 
     public void initializePlayer(final Player p) {
@@ -95,11 +101,13 @@ public class AccountManager implements IAccountManager {
         loggedInUsers.remove(p.getUniqueId());
         awaitingLogins.remove(discordID);
         discordRegisterCodes.remove(discordID);
+        refreshBotStatus();
     }
 
     private void finalizeLogin(String discordUserID, UUID playerID) {
         loggedInUsers.put(playerID, discordUserID);
         awaitingLogins.remove(discordUserID);
+        refreshBotStatus();
     }
 
     private void handleRegister(final Player p) {
@@ -134,5 +142,13 @@ public class AccountManager implements IAccountManager {
 
         discordRegisterCodes.put(registrationCode, p.getUniqueId());
         return registrationCode;
+    }
+
+    private void refreshBotStatus() {
+        if (!config.getDiscordBotEnableActiveStatus()) {
+            return;
+        }
+
+        plugin.jda.getPresence().setActivity(Activity.playing(String.format("Minecraft %d/%d", loggedInUsers.size(), Bukkit.getMaxPlayers())));
     }
 }

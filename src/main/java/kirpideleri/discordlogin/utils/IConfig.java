@@ -11,4 +11,5 @@ public interface IConfig {
     String getDiscordButtonsAccept();
     String getDiscordButtonsReject();
     Set<String> getServerCommandWhitelist();
+    boolean getDiscordBotEnableActiveStatus();
 }

@@ -14,4 +14,5 @@ public interface IAccountManager {
     void handlePlayerQuit(final Player p);
     boolean isLoggedIn(final Player p);
     Map<UUID, String> getLoggedInUsers();
+    void onEnable();
 }

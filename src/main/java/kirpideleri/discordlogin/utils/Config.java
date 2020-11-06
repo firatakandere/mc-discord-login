@@ -15,6 +15,7 @@ public class Config implements IConfig {
     private final String DISCORD_BOT_TOKEN = "Discord.Bot.Token";
     private final String DISCORD_BOT_ONLINE_STATUS = "Discord.Bot.OnlineStatus";
     private final String DISCORD_BOT_GUILD_ID = "Discord.GuildID";
+    private final String DISCORD_BOT_ENABLE_ACTIVE_STATUS = "Discord.Bot.EnableActiveStatus";
     private final String DISCORD_COMMAND_PREFIX = "Discord.CommandPrefix";
     private final String DISCORD_COMMAND_CHANNEL_ID = "Discord.CommandChannelId";
     private final String DISCORD_BUTTONS_ACCEPT = "Discord.Buttons.Accept";
@@ -33,6 +34,7 @@ public class Config implements IConfig {
         ymlConfig.addDefault(DISCORD_COMMAND_CHANNEL_ID, "");
         ymlConfig.addDefault(DISCORD_BUTTONS_ACCEPT, "✅");
         ymlConfig.addDefault(DISCORD_BUTTONS_REJECT, "❌");
+        ymlConfig.addDefault(DISCORD_BOT_ENABLE_ACTIVE_STATUS, true);
         ymlConfig.options().copyDefaults(true);
 
         try {
@@ -63,4 +65,6 @@ public class Config implements IConfig {
     public String getDiscordButtonsReject() { return ymlConfig.getString(DISCORD_BUTTONS_REJECT); }
 
     public Set<String> getServerCommandWhitelist() { return new HashSet<>(ymlConfig.getStringList(SERVER_COMMAND_WHITELIST)); }
+
+    public boolean getDiscordBotEnableActiveStatus() { return ymlConfig.getBoolean(DISCORD_BOT_ENABLE_ACTIVE_STATUS); }
 }
