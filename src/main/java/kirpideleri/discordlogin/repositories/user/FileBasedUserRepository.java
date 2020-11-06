@@ -19,12 +19,12 @@ public class FileBasedUserRepository implements IUserRepository {
         new File(path).mkdirs();
     }
 
-    public boolean isRegistered(UUID userID) {
+    public boolean isRegistered(final UUID userID) {
         return (new File(this.getUserAccountFilePath(userID))).exists();
     }
 
-    public void registerUser(UUID userID, String discordID) throws RegisterUserException {
-        File file = new File(this.getUserAccountFilePath(userID));
+    public void registerUser(final UUID userID, final String discordID) throws RegisterUserException {
+        final File file = new File(this.getUserAccountFilePath(userID));
         try {
             file.createNewFile();
         } catch (IOException ex) {
@@ -32,7 +32,7 @@ public class FileBasedUserRepository implements IUserRepository {
             throw new RegisterUserException("Could not create file for user registration", ex);
         }
 
-        YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+        final YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
         yml.set(DISCORD_ID, discordID);
         try {
             yml.save(file);
@@ -42,10 +42,10 @@ public class FileBasedUserRepository implements IUserRepository {
         }
     }
 
-    public String getDiscordID(UUID playerID) throws NotFoundException {
-        File file = new File(this.getUserAccountFilePath(playerID));
-        YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-        String discordID = yml.getString(DISCORD_ID);
+    public String getDiscordID(final UUID playerID) throws NotFoundException {
+        final File file = new File(this.getUserAccountFilePath(playerID));
+        final YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+        final String discordID = yml.getString(DISCORD_ID);
         if (discordID == null) {
             throw new NotFoundException("Discord ID is not available for this user.");
         }

@@ -1,10 +1,10 @@
 package kirpideleri.discordlogin.utils;
 
 public interface IMessages {
-    String getDiscordRegistrationSuccess(String discordUserID);
+    String getDiscordRegistrationSuccess(final String discordUserID);
     String getDiscordRegistrationFailure();
-    String getDiscordRegistrationInvalidKey(String registrationKey);
-    String getDiscordCommonInvalidArgumentCount(int expectedArgumentCount);
-    String getDiscordLoginMessage(String serverName, String joinedIpAddress);
+    String getDiscordRegistrationInvalidKey(final String registrationKey);
+    String getDiscordCommonInvalidArgumentCount(final int expectedArgumentCount);
+    String getDiscordLoginMessage(final String serverName, final String joinedIpAddress);
     String getDiscordNoOnlineUsers();
 }

@@ -24,7 +24,7 @@ public class Config implements IConfig {
     private final String SERVER_COMMAND_WHITELIST = "Server.CommandWhitelist";
 
     public Config() {
-        File configFile = new File("plugins/DiscordLogin/Settings.yml");
+        final File configFile = new File("plugins/DiscordLogin/Settings.yml");
         ymlConfig = YamlConfiguration.loadConfiguration(configFile);
 
         ymlConfig.addDefault(DISCORD_BOT_TOKEN, "");

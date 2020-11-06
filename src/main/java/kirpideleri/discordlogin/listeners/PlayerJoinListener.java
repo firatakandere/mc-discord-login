@@ -11,15 +11,19 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerJoinListener implements Listener {
 
     @Inject
-    IAccountManager accountManager;
+    public PlayerJoinListener(final IAccountManager accountManager) {
+        this.accountManager = accountManager;
+    }
+
+    private final IAccountManager accountManager;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onPlayerJoin(final PlayerJoinEvent e) {
-        this.accountManager.initializePlayer(e.getPlayer());
+        accountManager.initializePlayer(e.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    private void onPlayerQuit(PlayerQuitEvent e) {
-        this.accountManager.handlePlayerQuit(e.getPlayer());
+    private void onPlayerQuit(final PlayerQuitEvent e) {
+        accountManager.handlePlayerQuit(e.getPlayer());
     }
 }

@@ -21,10 +21,14 @@ import java.util.regex.Pattern;
 public class PreventionListener implements Listener {
 
     @Inject
-    IAccountManager accountManager;
+    public PreventionListener(final IAccountManager accountManager, final IConfig config) {
+        this.accountManager = accountManager;
+        this.config = config;
+    }
 
-    @Inject
-    IConfig config;
+    private final IAccountManager accountManager;
+    private final IConfig config;
+
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void onPlayerFish(final PlayerFishEvent e) {
@@ -121,8 +125,7 @@ public class PreventionListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void onCommand(final PlayerCommandPreprocessEvent e) {
         try {
-            String command = extractCommand(e.getMessage());
-            Bukkit.getLogger().info("Whitelist: " + config.getServerCommandWhitelist().toString());
+            final String command = extractCommand(e.getMessage());
             if (config.getServerCommandWhitelist().contains(command)) {
                 return;
             }
@@ -143,13 +146,9 @@ public class PreventionListener implements Listener {
     }
 
     private String extractCommand(final String str) throws NotFoundException {
-        String pattern = "^/(\\S+)";
-
-        // Create a Pattern object
-        Pattern r = Pattern.compile(pattern);
-
-        // Now create matcher object.
-        Matcher m = r.matcher(str);
+        final String pattern = "^/(\\S+)";
+        final Pattern r = Pattern.compile(pattern);
+        final Matcher m = r.matcher(str);
         if (m.find() && m.groupCount() == 1) {
             return m.group(1);
         }else {

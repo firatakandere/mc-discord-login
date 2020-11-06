@@ -11,13 +11,16 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class RegisterCommand implements IDiscordCommand {
 
     @Inject
-    private IAccountManager accountManager;
+    public RegisterCommand(final IAccountManager accountManager, final IMessages messages) {
+        this.accountManager = accountManager;
+        this.messages = messages;
+    }
 
-    @Inject
-    private IMessages messages;
+    private final IAccountManager accountManager;
+    private final IMessages messages;
 
     @Override
-    public void execute(GuildMessageReceivedEvent e, String[] args) {
+    public void execute(final GuildMessageReceivedEvent e, final String[] args) {
         if (args.length != 1) {
             e.getChannel().sendMessage(messages.getDiscordCommonInvalidArgumentCount(1)).queue();
             return;

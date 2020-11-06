@@ -6,6 +6,7 @@ import kirpideleri.discordlogin.exceptions.NotFoundException;
 import kirpideleri.discordlogin.exceptions.RegisterUserException;
 import kirpideleri.discordlogin.exceptions.RegistrationKeyNotFoundException;
 import kirpideleri.discordlogin.repositories.user.IUserRepository;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,29 +19,32 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class AccountManager implements IAccountManager {
-    private final Map<String, UUID> discordRegisterCodes;
-    private final Map<String, Pair<String, UUID>> awaitingLogins;
-
-    private final Map<UUID, String> loggedInUsers;
-
-    // @todo I really don't like this here.
-    @Inject
-    private DiscordLoginPlugin plugin;
 
     @Inject
-    private IMessages messages;
+    public AccountManager(
+            DiscordLoginPlugin plugin, // @todo I hate using this
+            IMessages messages,
+            IConfig config,
+            IUserRepository userRepository
+    ) {
+        this.plugin = plugin;
+        this.messages = messages;
+        this.config = config;
+        this.userRepository = userRepository;
 
-    @Inject
-    private IConfig config;
-
-    @Inject
-    private IUserRepository userRepository;
-
-    public AccountManager() {
         discordRegisterCodes = new HashMap<>();
         loggedInUsers = new HashMap<>(); // playerUUID, discordUserID
         awaitingLogins = new HashMap<>(); // discordUserID, (discordMessageID, playerUUID)
     }
+
+    private final Map<String, UUID> discordRegisterCodes;
+    private final Map<String, Pair<String, UUID>> awaitingLogins;
+    private final Map<UUID, String> loggedInUsers;
+
+    private final DiscordLoginPlugin plugin;
+    private final IMessages messages;
+    private final IConfig config;
+    private final IUserRepository userRepository;
 
     // @todo any better way?
     public void onEnable() {
@@ -50,7 +54,7 @@ public class AccountManager implements IAccountManager {
     public void initializePlayer(final Player p) {
         if (userRepository.isRegistered(p.getUniqueId())) {
             try {
-                this.handleLogin(p);
+                handleLogin(p);
             } catch (Exception e) {
                 Bukkit.getLogger().log(Level.SEVERE, "failed", e);
                 // @todo handle this
@@ -60,28 +64,28 @@ public class AccountManager implements IAccountManager {
         }
     }
 
-    public void registerPlayer(String registrationCode, String discordUserID) throws RegisterUserException, RegistrationKeyNotFoundException {
-        UUID playerID = discordRegisterCodes.getOrDefault(registrationCode, null);
+    public void registerPlayer(final String registrationCode, final String discordUserID) throws RegisterUserException, RegistrationKeyNotFoundException {
+        final UUID playerID = discordRegisterCodes.getOrDefault(registrationCode, null);
 
         if (playerID == null) {
             throw new RegistrationKeyNotFoundException();
         }
 
-        this.userRepository.registerUser(playerID, discordUserID);
+        userRepository.registerUser(playerID, discordUserID);
 
         // Log user in.
-        this.finalizeLogin(discordUserID, playerID);
+        finalizeLogin(discordUserID, playerID);
 
         // Clear
         discordRegisterCodes.remove(registrationCode);
     }
 
-    public void handleUserReaction(String discordUserID, String discordMessageID, String emote) {
+    public void handleUserReaction(final String discordUserID, final String discordMessageID, final String emote) {
         if (emote.equals(config.getDiscordButtonsReject())) {
             awaitingLogins.remove(discordUserID);
         }
         else if (emote.equals(config.getDiscordButtonsAccept()) && awaitingLogins.containsKey(discordUserID)) {
-            Pair<String, UUID> pair = awaitingLogins.get(discordUserID);
+            final Pair<String, UUID> pair = awaitingLogins.get(discordUserID);
             if (pair.getLeft().equals(discordMessageID)) {
                 this.finalizeLogin(discordUserID, pair.getRight());
             }
@@ -97,26 +101,26 @@ public class AccountManager implements IAccountManager {
     }
 
     public void handlePlayerQuit(final Player p) {
-        String discordID = loggedInUsers.get(p.getUniqueId());
+        final String discordID = loggedInUsers.get(p.getUniqueId());
         loggedInUsers.remove(p.getUniqueId());
         awaitingLogins.remove(discordID);
         discordRegisterCodes.remove(discordID);
         refreshBotStatus();
     }
 
-    private void finalizeLogin(String discordUserID, UUID playerID) {
+    private void finalizeLogin(final String discordUserID, final UUID playerID) {
         loggedInUsers.put(playerID, discordUserID);
         awaitingLogins.remove(discordUserID);
         refreshBotStatus();
     }
 
     private void handleRegister(final Player p) {
-        String registrationCode = assignRegistrationCodeToPlayer(p);
+        final String registrationCode = assignRegistrationCodeToPlayer(p);
         p.sendMessage("/register " + registrationCode);
     }
 
     private void handleLogin(final Player p) throws NotFoundException {
-        String discordID = userRepository.getDiscordID(p.getUniqueId());
+        final String discordID = userRepository.getDiscordID(p.getUniqueId());
 
         // Make sure user is still part of Discord guild
         try {

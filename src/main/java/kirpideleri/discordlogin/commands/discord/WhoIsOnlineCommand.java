@@ -15,13 +15,16 @@ import java.util.UUID;
 public class WhoIsOnlineCommand implements IDiscordCommand {
 
     @Inject
-    private IAccountManager accountManager;
+    WhoIsOnlineCommand(final IAccountManager accountManager, final IMessages messages) {
+        this.accountManager = accountManager;
+        this.messages = messages;
+    }
 
-    @Inject
-    private IMessages messages;
+    private final IAccountManager accountManager;
+    private final IMessages messages;
 
     @Override
-    public void execute(GuildMessageReceivedEvent e, String[] args)
+    public void execute(final GuildMessageReceivedEvent e, final String[] args)
     {
         if (args.length != 0) {
             e.getChannel().sendMessage(messages.getDiscordCommonInvalidArgumentCount(0)).queue();
@@ -35,7 +38,7 @@ public class WhoIsOnlineCommand implements IDiscordCommand {
             return;
         }
 
-        List<String> onlinePlayerNames = new ArrayList<String>();
+        final List<String> onlinePlayerNames = new ArrayList<>();
 
         for (UUID playerID : loggedInUsers.keySet()) {
             try {

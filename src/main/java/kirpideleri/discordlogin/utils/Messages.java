@@ -20,7 +20,7 @@ public class Messages implements IMessages {
     private final String DISCORD_LOGIN_MESSAGE = "Discord.Login.Message";
 
     public Messages() {
-        File messagesFile = new File("plugins/DiscordLogin/Messages.yml");
+        final File messagesFile = new File("plugins/DiscordLogin/Messages.yml");
         ymlConfig = YamlConfiguration.loadConfiguration(messagesFile);
 
         ymlConfig.addDefault(DISCORD_COMMON_INVALID_ARGUMENT_COUNT, "Command is expected to have {{count}} argument(s).");
@@ -41,19 +41,19 @@ public class Messages implements IMessages {
         return ymlConfig.getString(DISCORD_REGISTRATION_FAILURE);
     }
 
-    public String getDiscordRegistrationSuccess(String discordUserID) {
+    public String getDiscordRegistrationSuccess(final String discordUserID) {
         return ymlConfig.getString(DISCORD_REGISTRATION_SUCCESS).replace("{{username}}", String.format("<@%s>", discordUserID));
     }
 
-    public String getDiscordRegistrationInvalidKey(String registrationKey) {
+    public String getDiscordRegistrationInvalidKey(final String registrationKey) {
         return ymlConfig.getString(DISCORD_REGISTRATION_INVALID_KEY).replace("{{key}}", registrationKey);
     }
 
-    public String getDiscordCommonInvalidArgumentCount(int expectedArgumentCount) {
+    public String getDiscordCommonInvalidArgumentCount(final int expectedArgumentCount) {
         return ymlConfig.getString(DISCORD_COMMON_INVALID_ARGUMENT_COUNT).replace("{{count}}", String.valueOf(expectedArgumentCount));
     }
 
-    public String getDiscordLoginMessage(String serverName, String joinedIpAddress) {
+    public String getDiscordLoginMessage(final String serverName, final String joinedIpAddress) {
         return ymlConfig.getString(DISCORD_LOGIN_MESSAGE)
                 .replace("{{servername}}", serverName)
                 .replace("{{ip}}", joinedIpAddress);

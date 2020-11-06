@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public interface IAccountManager {
     void initializePlayer(final Player p);
-    void registerPlayer(String registrationCode, String discordUserID) throws RegisterUserException, RegistrationKeyNotFoundException;
-    void handleUserReaction(String discordUserID, String discordMessageID, String emote);
+    void registerPlayer(final String registrationCode, final String discordUserID) throws RegisterUserException, RegistrationKeyNotFoundException;
+    void handleUserReaction(final String discordUserID, final String discordMessageID, final String emote);
     void handlePlayerQuit(final Player p);
     boolean isLoggedIn(final Player p);
     Map<UUID, String> getLoggedInUsers();
