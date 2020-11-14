@@ -4,10 +4,9 @@
 - [x] Register through Discord.
 - [x] Login with Discord.
 - [x] Command whitelist for unregistered users.
-- [ ] Prevent player interaction and movement until logged in.
+- [x] Prevent player interaction and movement until logged in.
 - [ ] Unregister.
 - [x] Who's online command for Discord.
-- [ ] Show # of online users / total capacity on Discord Bot's description.
+- [x] Show # of online users / total capacity on Discord Bot's description.
 - [ ] Add configuration for what should be prevented.
-- [ ] i18n.
 - [ ] Bidirectional communication.
