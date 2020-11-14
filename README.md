@@ -6,6 +6,7 @@
 - [x] Command whitelist for unregistered users.
 - [x] Prevent player interaction and movement until logged in.
 - [ ] Unregister.
+- [ ] Auto-unregister when someone leaves Discord Guild.
 - [x] Who's online command for Discord.
 - [x] Show # of online users / total capacity on Discord Bot's description.
 - [ ] Add configuration for what should be prevented.
