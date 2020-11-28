@@ -2,7 +2,7 @@ package kirpideleri.discordlogin.commands.discord;
 
 import com.google.inject.Inject;
 import kirpideleri.discordlogin.exceptions.RegisterUserException;
-import kirpideleri.discordlogin.exceptions.RegistrationKeyNotFoundException;
+import kirpideleri.discordlogin.exceptions.NotFoundException;
 import kirpideleri.discordlogin.utils.IAccountManager;
 import kirpideleri.discordlogin.utils.IDiscordCommand;
 import kirpideleri.discordlogin.utils.IMessages;
@@ -30,7 +30,7 @@ public class RegisterCommand implements IDiscordCommand {
             e.getChannel().sendMessage(messages.getDiscordRegistrationSuccess(e.getAuthor().getId())).queue();
         } catch (RegisterUserException registerUserException) {
             e.getChannel().sendMessage(messages.getDiscordRegistrationFailure()).queue();
-        } catch (RegistrationKeyNotFoundException registrationKeyNotFoundException) {
+        } catch (NotFoundException registrationKeyNotFoundException) {
             e.getChannel().sendMessage(messages.getDiscordRegistrationInvalidKey(args[0])).queue();
         }
     }

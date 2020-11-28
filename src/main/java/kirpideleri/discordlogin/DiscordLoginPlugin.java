@@ -3,6 +3,7 @@ package kirpideleri.discordlogin;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import kirpideleri.discordlogin.commands.discord.RegisterCommand;
+import kirpideleri.discordlogin.commands.discord.UnregisterCommand;
 import kirpideleri.discordlogin.commands.discord.WhoIsOnlineCommand;
 import kirpideleri.discordlogin.listeners.DiscordListener;
 import kirpideleri.discordlogin.listeners.PlayerJoinListener;
@@ -31,6 +32,9 @@ public class DiscordLoginPlugin extends JavaPlugin
 
     @Inject
     RegisterCommand registerCommand;
+
+    @Inject
+    UnregisterCommand unregisterCommand;
 
     @Inject
     PreventionListener preventionListener;
@@ -68,6 +72,7 @@ public class DiscordLoginPlugin extends JavaPlugin
         Bukkit.getPluginManager().registerEvents(this.playerJoinListener, this);
 
         discordListener.addCommand("register", this.registerCommand);
+        discordListener.addCommand("unregister", this.unregisterCommand);
         discordListener.addCommand("whoisonline", this.whoisonlineCommand);
     }
 

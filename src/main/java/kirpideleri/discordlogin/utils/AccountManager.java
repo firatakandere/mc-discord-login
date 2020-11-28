@@ -4,10 +4,11 @@ import com.google.inject.Inject;
 import kirpideleri.discordlogin.DiscordLoginPlugin;
 import kirpideleri.discordlogin.exceptions.NotFoundException;
 import kirpideleri.discordlogin.exceptions.RegisterUserException;
-import kirpideleri.discordlogin.exceptions.RegistrationKeyNotFoundException;
+import kirpideleri.discordlogin.exceptions.UnregisterUserException;
 import kirpideleri.discordlogin.repositories.user.IUserRepository;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
@@ -33,13 +34,13 @@ public class AccountManager implements IAccountManager {
         this.userRepository = userRepository;
 
         discordRegisterCodes = new HashMap<>();
-        loggedInUsers = new HashMap<>(); // playerUUID, discordUserID
+        loggedInUsers = new DualHashBidiMap<>(); // playerUUID, discordUserID
         awaitingLogins = new HashMap<>(); // discordUserID, (discordMessageID, playerUUID)
     }
 
     private final Map<String, UUID> discordRegisterCodes;
     private final Map<String, Pair<String, UUID>> awaitingLogins;
-    private final Map<UUID, String> loggedInUsers;
+    private final BidiMap<UUID, String> loggedInUsers;
 
     private final DiscordLoginPlugin plugin;
     private final IMessages messages;
@@ -64,11 +65,11 @@ public class AccountManager implements IAccountManager {
         }
     }
 
-    public void registerPlayer(final String registrationCode, final String discordUserID) throws RegisterUserException, RegistrationKeyNotFoundException {
+    public void registerPlayer(final String registrationCode, final String discordUserID) throws RegisterUserException, NotFoundException {
         final UUID playerID = discordRegisterCodes.getOrDefault(registrationCode, null);
 
         if (playerID == null) {
-            throw new RegistrationKeyNotFoundException();
+            throw new NotFoundException();
         }
 
         userRepository.registerUser(playerID, discordUserID);
@@ -78,6 +79,11 @@ public class AccountManager implements IAccountManager {
 
         // Clear
         discordRegisterCodes.remove(registrationCode);
+    }
+
+    public void unregisterPlayer(final String discordUserID) throws NotFoundException, UnregisterUserException {
+        loggedInUsers.removeValue(discordUserID); // make sure user is not in loggedInUsers anymore
+        userRepository.unregisterUser(discordUserID);
     }
 
     public void handleUserReaction(final String discordUserID, final String discordMessageID, final String emote) {

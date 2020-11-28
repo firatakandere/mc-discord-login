@@ -2,11 +2,13 @@ package kirpideleri.discordlogin.repositories.user;
 
 import kirpideleri.discordlogin.exceptions.NotFoundException;
 import kirpideleri.discordlogin.exceptions.RegisterUserException;
+import kirpideleri.discordlogin.exceptions.UnregisterUserException;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -40,6 +42,24 @@ public class FileBasedUserRepository implements IUserRepository {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save into user file.", ex);
             throw new RegisterUserException("Could not save into user file", ex);
         }
+    }
+
+    public void unregisterUser(final String discordID) throws NotFoundException, UnregisterUserException {
+        File path = new File(this.path);
+        File[] directoryListing = path.listFiles();
+
+        for (File userFile : directoryListing) {
+            final YamlConfiguration yml = YamlConfiguration.loadConfiguration(userFile);
+            if (Objects.equals(yml.getString(DISCORD_ID), discordID)) {
+                if (userFile.delete()) {
+                    return;
+                } else {
+                    throw new UnregisterUserException();
+                }
+            }
+        }
+
+        throw new NotFoundException();
     }
 
     public String getDiscordID(final UUID playerID) throws NotFoundException {

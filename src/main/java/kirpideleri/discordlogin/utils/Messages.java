@@ -15,6 +15,10 @@ public class Messages implements IMessages {
     private final String DISCORD_REGISTRATION_FAILURE = "Discord.Registration.Failure";
     private final String DISCORD_REGISTRATION_INVALID_KEY = "Discord.Registration.InvalidKey";
 
+    private final String DISCORD_UNREGISTRATION_SUCCESS = "Discord.Unregistration.Success";
+    private final String DISCORD_UNREGISTRATION_FAILURE = "Discord.Unregistration.Failure";
+    private final String DISCORD_UNREGISTRATION_NOT_FOUND = "Discord.Unregistration.NotFound";
+
     private final String DISCORD_NO_ONLINE_USERS = "Discord.NoOnlineUsers";
 
     private final String DISCORD_LOGIN_MESSAGE = "Discord.Login.Message";
@@ -29,6 +33,9 @@ public class Messages implements IMessages {
         ymlConfig.addDefault(DISCORD_REGISTRATION_INVALID_KEY, "Registration key {{key}} is invalid.");
         ymlConfig.addDefault(DISCORD_LOGIN_MESSAGE, "You have just joined {{servername}} with the ip {{ip}}. Use emotes to approve or deny the login.");
         ymlConfig.addDefault(DISCORD_NO_ONLINE_USERS, "No online users.");
+        ymlConfig.addDefault(DISCORD_UNREGISTRATION_SUCCESS, "{{username}} has been unregistered successfully.");
+        ymlConfig.addDefault(DISCORD_UNREGISTRATION_FAILURE, "Unregister has failed. Please contact server admin.");
+        ymlConfig.addDefault(DISCORD_UNREGISTRATION_NOT_FOUND, "User registration for {{username}} has not been found.");
         ymlConfig.options().copyDefaults(true);
         try {
             ymlConfig.save(messagesFile);
@@ -47,6 +54,18 @@ public class Messages implements IMessages {
 
     public String getDiscordRegistrationInvalidKey(final String registrationKey) {
         return ymlConfig.getString(DISCORD_REGISTRATION_INVALID_KEY).replace("{{key}}", registrationKey);
+    }
+
+    public String getDiscordUnregistrationSuccess(String discordUserID) {
+        return ymlConfig.getString(DISCORD_UNREGISTRATION_SUCCESS).replace("{{username}}", String.format("<@%s>", discordUserID));
+    }
+
+    public String getDiscordUnregistrationNotFound(String discordUserID) {
+        return ymlConfig.getString(DISCORD_UNREGISTRATION_NOT_FOUND).replace("{{username}}", String.format("<@%s>", discordUserID));
+    }
+
+    public String getDiscordUnregistrationFailure() {
+        return ymlConfig.getString(DISCORD_UNREGISTRATION_FAILURE);
     }
 
     public String getDiscordCommonInvalidArgumentCount(final int expectedArgumentCount) {
