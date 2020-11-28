@@ -1,4 +1,4 @@
-package kirpideleri.discordlogin.utils;
+package github.fakandere.discordlogin.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;

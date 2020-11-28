@@ -1,7 +1,7 @@
-package kirpideleri.discordlogin.listeners;
+package github.fakandere.discordlogin.listeners;
 
 import com.google.inject.Inject;
-import kirpideleri.discordlogin.utils.IAccountManager;
+import github.fakandere.discordlogin.utils.IAccountManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

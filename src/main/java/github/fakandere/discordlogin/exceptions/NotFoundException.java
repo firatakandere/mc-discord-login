@@ -1,4 +1,4 @@
-package kirpideleri.discordlogin.exceptions;
+package github.fakandere.discordlogin.exceptions;
 
 public class NotFoundException extends Exception {
     public NotFoundException() {}

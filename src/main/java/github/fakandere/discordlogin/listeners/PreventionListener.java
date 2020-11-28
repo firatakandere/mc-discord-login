@@ -1,10 +1,9 @@
-package kirpideleri.discordlogin.listeners;
+package github.fakandere.discordlogin.listeners;
 
 import com.google.inject.Inject;
-import kirpideleri.discordlogin.exceptions.NotFoundException;
-import kirpideleri.discordlogin.utils.IAccountManager;
-import kirpideleri.discordlogin.utils.IConfig;
-import org.bukkit.Bukkit;
+import github.fakandere.discordlogin.exceptions.NotFoundException;
+import github.fakandere.discordlogin.utils.IAccountManager;
+import github.fakandere.discordlogin.utils.IConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

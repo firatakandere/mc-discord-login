@@ -1,9 +1,9 @@
-package kirpideleri.discordlogin;
+package github.fakandere.discordlogin;
 
 import com.google.inject.*;
-import kirpideleri.discordlogin.repositories.user.FileBasedUserRepository;
-import kirpideleri.discordlogin.repositories.user.IUserRepository;
-import kirpideleri.discordlogin.utils.*;
+import github.fakandere.discordlogin.utils.*;
+import github.fakandere.discordlogin.repositories.user.FileBasedUserRepository;
+import github.fakandere.discordlogin.repositories.user.IUserRepository;
 
 public class BinderModule extends AbstractModule {
     private final DiscordLoginPlugin plugin;

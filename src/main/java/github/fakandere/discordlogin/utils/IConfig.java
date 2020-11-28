@@ -1,4 +1,4 @@
-package kirpideleri.discordlogin.utils;
+package github.fakandere.discordlogin.utils;
 
 import java.util.Set;
 

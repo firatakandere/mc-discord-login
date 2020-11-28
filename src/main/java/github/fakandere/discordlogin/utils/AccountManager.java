@@ -1,11 +1,11 @@
-package kirpideleri.discordlogin.utils;
+package github.fakandere.discordlogin.utils;
 
 import com.google.inject.Inject;
-import kirpideleri.discordlogin.DiscordLoginPlugin;
-import kirpideleri.discordlogin.exceptions.NotFoundException;
-import kirpideleri.discordlogin.exceptions.RegisterUserException;
-import kirpideleri.discordlogin.exceptions.UnregisterUserException;
-import kirpideleri.discordlogin.repositories.user.IUserRepository;
+import github.fakandere.discordlogin.exceptions.NotFoundException;
+import github.fakandere.discordlogin.exceptions.RegisterUserException;
+import github.fakandere.discordlogin.repositories.user.IUserRepository;
+import github.fakandere.discordlogin.DiscordLoginPlugin;
+import github.fakandere.discordlogin.exceptions.UnregisterUserException;
 import net.dv8tion.jda.api.entities.Activity;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
@@ -13,7 +13,6 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class AccountManager implements IAccountManager {
 
     @Inject
     public AccountManager(
-            DiscordLoginPlugin plugin, // @todo I hate using this
+            DiscordLoginPlugin plugin,
             IMessages messages,
             IConfig config,
             IUserRepository userRepository

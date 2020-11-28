@@ -1,8 +1,8 @@
-package kirpideleri.discordlogin.utils;
+package github.fakandere.discordlogin.utils;
 
-import kirpideleri.discordlogin.exceptions.NotFoundException;
-import kirpideleri.discordlogin.exceptions.RegisterUserException;
-import kirpideleri.discordlogin.exceptions.UnregisterUserException;
+import github.fakandere.discordlogin.exceptions.NotFoundException;
+import github.fakandere.discordlogin.exceptions.RegisterUserException;
+import github.fakandere.discordlogin.exceptions.UnregisterUserException;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
