@@ -22,6 +22,7 @@ public class Config implements IConfig {
     private final String DISCORD_BUTTONS_REJECT = "Discord.Buttons.Reject";
 
     private final String SERVER_COMMAND_WHITELIST = "Server.CommandWhitelist";
+    private final String SERVER_TIMEOUT_IN_SECONDS = "Server.TimeoutInSeconds";
 
     public Config() {
         final File configFile = new File("plugins/DiscordLogin/Settings.yml");
@@ -35,6 +36,7 @@ public class Config implements IConfig {
         ymlConfig.addDefault(DISCORD_BUTTONS_ACCEPT, "✅");
         ymlConfig.addDefault(DISCORD_BUTTONS_REJECT, "❌");
         ymlConfig.addDefault(DISCORD_BOT_ENABLE_ACTIVE_STATUS, true);
+        ymlConfig.addDefault(SERVER_TIMEOUT_IN_SECONDS, 20);
         ymlConfig.options().copyDefaults(true);
 
         try {
@@ -67,4 +69,6 @@ public class Config implements IConfig {
     public Set<String> getServerCommandWhitelist() { return new HashSet<>(ymlConfig.getStringList(SERVER_COMMAND_WHITELIST)); }
 
     public boolean getDiscordBotEnableActiveStatus() { return ymlConfig.getBoolean(DISCORD_BOT_ENABLE_ACTIVE_STATUS); }
+
+    public int getServerTimeoutInSeconds() { return ymlConfig.getInt(SERVER_TIMEOUT_IN_SECONDS); }
 }

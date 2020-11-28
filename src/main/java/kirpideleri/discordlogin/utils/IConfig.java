@@ -12,4 +12,5 @@ public interface IConfig {
     String getDiscordButtonsReject();
     Set<String> getServerCommandWhitelist();
     boolean getDiscordBotEnableActiveStatus();
+    int getServerTimeoutInSeconds();
 }

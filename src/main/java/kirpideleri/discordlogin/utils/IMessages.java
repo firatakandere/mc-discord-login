@@ -10,4 +10,6 @@ public interface IMessages {
     String getDiscordCommonInvalidArgumentCount(final int expectedArgumentCount);
     String getDiscordLoginMessage(final String serverName, final String joinedIpAddress);
     String getDiscordNoOnlineUsers();
+
+    String getServerTimeoutFailure();
 }

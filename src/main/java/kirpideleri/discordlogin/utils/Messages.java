@@ -23,6 +23,8 @@ public class Messages implements IMessages {
 
     private final String DISCORD_LOGIN_MESSAGE = "Discord.Login.Message";
 
+    private final String MINECRAFT_TIMEOUT_FAILURE = "Minecraft.Timeout.Failure";
+
     public Messages() {
         final File messagesFile = new File("plugins/DiscordLogin/Messages.yml");
         ymlConfig = YamlConfiguration.loadConfiguration(messagesFile);
@@ -36,6 +38,7 @@ public class Messages implements IMessages {
         ymlConfig.addDefault(DISCORD_UNREGISTRATION_SUCCESS, "{{username}} has been unregistered successfully.");
         ymlConfig.addDefault(DISCORD_UNREGISTRATION_FAILURE, "Unregister has failed. Please contact server admin.");
         ymlConfig.addDefault(DISCORD_UNREGISTRATION_NOT_FOUND, "User registration for {{username}} has not been found.");
+        ymlConfig.addDefault(MINECRAFT_TIMEOUT_FAILURE, "You have failed to register/login within allowed timeframe.");
         ymlConfig.options().copyDefaults(true);
         try {
             ymlConfig.save(messagesFile);
@@ -78,7 +81,7 @@ public class Messages implements IMessages {
                 .replace("{{ip}}", joinedIpAddress);
     }
 
-    public String getDiscordNoOnlineUsers() {
-        return ymlConfig.getString(DISCORD_NO_ONLINE_USERS);
-    }
+    public String getDiscordNoOnlineUsers() { return ymlConfig.getString(DISCORD_NO_ONLINE_USERS); }
+
+    public String getServerTimeoutFailure() { return ymlConfig.getString(MINECRAFT_TIMEOUT_FAILURE); }
 }

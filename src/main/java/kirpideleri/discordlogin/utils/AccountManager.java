@@ -13,6 +13,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,14 @@ public class AccountManager implements IAccountManager {
     }
 
     public void initializePlayer(final Player p) {
+        /* this can be cancelled when user logins/registers or leaves
+         * but this keeps the code simple for now
+         */
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
+            if (!isLoggedIn(p)) {
+                p.kickPlayer(messages.getServerTimeoutFailure());
+            }
+        }, 20L * config.getServerTimeoutInSeconds());
         if (userRepository.isRegistered(p.getUniqueId())) {
             try {
                 handleLogin(p);
