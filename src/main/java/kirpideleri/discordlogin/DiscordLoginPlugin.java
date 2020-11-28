@@ -13,6 +13,7 @@ import kirpideleri.discordlogin.utils.IConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
@@ -77,7 +78,7 @@ public class DiscordLoginPlugin extends JavaPlugin
     }
 
     private void connectToDiscord() {
-        final JDABuilder jdaBuilder = JDABuilder.createDefault(this.config.getDiscordBotToken());
+        final JDABuilder jdaBuilder = JDABuilder.create(this.config.getDiscordBotToken(), GatewayIntent.GUILD_MEMBERS);
 
         try {
             jdaBuilder.setStatus(OnlineStatus.valueOf(this.config.getDiscordBotOnlineStatus()));

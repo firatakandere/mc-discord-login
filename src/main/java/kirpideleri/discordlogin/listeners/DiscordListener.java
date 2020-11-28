@@ -1,16 +1,20 @@
 package kirpideleri.discordlogin.listeners;
 
 import com.google.inject.Inject;
+import kirpideleri.discordlogin.exceptions.NotFoundException;
+import kirpideleri.discordlogin.exceptions.UnregisterUserException;
 import kirpideleri.discordlogin.utils.IAccountManager;
 import kirpideleri.discordlogin.utils.IConfig;
 import kirpideleri.discordlogin.utils.IDiscordCommand;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.react.PrivateMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bukkit.Bukkit;
 
-import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class DiscordListener extends ListenerAdapter {
 
@@ -59,15 +63,24 @@ public class DiscordListener extends ListenerAdapter {
 
         final String[] args = Arrays.copyOfRange(words, 1, words.length);
         commands.get(commandName).execute(e, args);
-
-
-        super.onGuildMessageReceived(e);
     }
 
     @Override
     public void onPrivateMessageReactionAdd(final PrivateMessageReactionAddEvent e) {
         accountManager.handleUserReaction(e.getUserId(), e.getMessageId(), e.getReactionEmote().getName());
+    }
 
-        super.onPrivateMessageReactionAdd(e);
+    @Override
+    public void onGuildMemberRemove(final GuildMemberRemoveEvent e) {
+        if (!e.getGuild().getId().equals(config.getDiscordBotGuildID())) {
+            return; // Ignore if from another guild
+        }
+
+        // @todo handling error can be better.
+        try {
+            accountManager.unregisterPlayer(e.getUser().getId());
+        } catch (NotFoundException | UnregisterUserException ex) {
+            Bukkit.getLogger().log(Level.WARNING, "Could not unregister a player that left Discord guild.", ex);
+        }
     }
 }
