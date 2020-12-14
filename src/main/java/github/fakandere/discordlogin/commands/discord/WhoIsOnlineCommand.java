@@ -50,5 +50,4 @@ public class WhoIsOnlineCommand implements IDiscordCommand {
 
         e.getChannel().sendMessage(String.join(", ", onlinePlayerNames)).queue();
      }
-
 }
