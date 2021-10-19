@@ -1,11 +1,11 @@
-package github.fakandere.discordlogin.listeners;
+package com.kirpideleri.discordlogin.listeners;
 
 import com.google.inject.Inject;
-import github.fakandere.discordlogin.exceptions.NotFoundException;
-import github.fakandere.discordlogin.utils.IAccountManager;
-import github.fakandere.discordlogin.utils.IConfig;
-import github.fakandere.discordlogin.exceptions.UnregisterUserException;
-import github.fakandere.discordlogin.utils.IDiscordCommand;
+import com.kirpideleri.discordlogin.exceptions.NotFoundException;
+import com.kirpideleri.discordlogin.exceptions.UnregisterUserException;
+import com.kirpideleri.discordlogin.utils.IAccountManager;
+import com.kirpideleri.discordlogin.utils.IConfig;
+import com.kirpideleri.discordlogin.utils.IDiscordCommand;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.react.PrivateMessageReactionAddEvent;

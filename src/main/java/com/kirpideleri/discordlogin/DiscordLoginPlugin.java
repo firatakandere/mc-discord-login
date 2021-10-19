@@ -1,15 +1,15 @@
-package github.fakandere.discordlogin;
+package com.kirpideleri.discordlogin;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import github.fakandere.discordlogin.commands.discord.RegisterCommand;
-import github.fakandere.discordlogin.commands.discord.UnregisterCommand;
-import github.fakandere.discordlogin.commands.discord.WhoIsOnlineCommand;
-import github.fakandere.discordlogin.listeners.DiscordListener;
-import github.fakandere.discordlogin.listeners.PlayerJoinListener;
-import github.fakandere.discordlogin.listeners.PreventionListener;
-import github.fakandere.discordlogin.utils.AccountManager;
-import github.fakandere.discordlogin.utils.IConfig;
+import com.kirpideleri.discordlogin.commands.discord.RegisterCommand;
+import com.kirpideleri.discordlogin.commands.discord.UnregisterCommand;
+import com.kirpideleri.discordlogin.commands.discord.WhoIsOnlineCommand;
+import com.kirpideleri.discordlogin.utils.AccountManager;
+import com.kirpideleri.discordlogin.utils.IConfig;
+import com.kirpideleri.discordlogin.listeners.DiscordListener;
+import com.kirpideleri.discordlogin.listeners.PlayerJoinListener;
+import com.kirpideleri.discordlogin.listeners.PreventionListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;

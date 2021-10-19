@@ -1,4 +1,4 @@
-package github.fakandere.discordlogin.utils;
+package com.kirpideleri.discordlogin.utils;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

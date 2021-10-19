@@ -1,4 +1,4 @@
-package github.fakandere.discordlogin.exceptions;
+package com.kirpideleri.discordlogin.exceptions;
 
 public class UnregisterUserException extends Exception {
     public UnregisterUserException() {}

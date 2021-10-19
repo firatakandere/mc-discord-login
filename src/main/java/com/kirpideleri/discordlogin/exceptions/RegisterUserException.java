@@ -1,4 +1,4 @@
-package github.fakandere.discordlogin.exceptions;
+package com.kirpideleri.discordlogin.exceptions;
 
 public class RegisterUserException extends Exception {
     public RegisterUserException() {}

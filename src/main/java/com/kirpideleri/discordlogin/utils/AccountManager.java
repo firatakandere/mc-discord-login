@@ -1,11 +1,11 @@
-package github.fakandere.discordlogin.utils;
+package com.kirpideleri.discordlogin.utils;
 
 import com.google.inject.Inject;
-import github.fakandere.discordlogin.exceptions.NotFoundException;
-import github.fakandere.discordlogin.exceptions.RegisterUserException;
-import github.fakandere.discordlogin.repositories.user.IUserRepository;
-import github.fakandere.discordlogin.DiscordLoginPlugin;
-import github.fakandere.discordlogin.exceptions.UnregisterUserException;
+import com.kirpideleri.discordlogin.repositories.user.IUserRepository;
+import com.kirpideleri.discordlogin.exceptions.NotFoundException;
+import com.kirpideleri.discordlogin.exceptions.RegisterUserException;
+import com.kirpideleri.discordlogin.DiscordLoginPlugin;
+import com.kirpideleri.discordlogin.exceptions.UnregisterUserException;
 import net.dv8tion.jda.api.entities.Activity;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;

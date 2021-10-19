@@ -1,11 +1,11 @@
-package github.fakandere.discordlogin.commands.discord;
+package com.kirpideleri.discordlogin.commands.discord;
 
 import com.google.inject.Inject;
-import github.fakandere.discordlogin.exceptions.NotFoundException;
-import github.fakandere.discordlogin.exceptions.RegisterUserException;
-import github.fakandere.discordlogin.utils.IAccountManager;
-import github.fakandere.discordlogin.utils.IMessages;
-import github.fakandere.discordlogin.utils.IDiscordCommand;
+import com.kirpideleri.discordlogin.exceptions.NotFoundException;
+import com.kirpideleri.discordlogin.exceptions.RegisterUserException;
+import com.kirpideleri.discordlogin.utils.IAccountManager;
+import com.kirpideleri.discordlogin.utils.IMessages;
+import com.kirpideleri.discordlogin.utils.IDiscordCommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class RegisterCommand implements IDiscordCommand {

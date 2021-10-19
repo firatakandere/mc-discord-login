@@ -1,9 +1,9 @@
-package github.fakandere.discordlogin.commands.discord;
+package com.kirpideleri.discordlogin.commands.discord;
 
 import com.google.inject.Inject;
-import github.fakandere.discordlogin.utils.IAccountManager;
-import github.fakandere.discordlogin.utils.IDiscordCommand;
-import github.fakandere.discordlogin.utils.IMessages;
+import com.kirpideleri.discordlogin.utils.IAccountManager;
+import com.kirpideleri.discordlogin.utils.IDiscordCommand;
+import com.kirpideleri.discordlogin.utils.IMessages;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bukkit.Bukkit;
 

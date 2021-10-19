@@ -1,4 +1,4 @@
-package github.fakandere.discordlogin.utils;
+package com.kirpideleri.discordlogin.utils;
 
 import java.io.File;
 import java.io.IOException;

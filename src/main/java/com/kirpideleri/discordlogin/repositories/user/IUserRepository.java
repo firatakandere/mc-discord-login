@@ -1,8 +1,8 @@
-package github.fakandere.discordlogin.repositories.user;
+package com.kirpideleri.discordlogin.repositories.user;
 
-import github.fakandere.discordlogin.exceptions.NotFoundException;
-import github.fakandere.discordlogin.exceptions.RegisterUserException;
-import github.fakandere.discordlogin.exceptions.UnregisterUserException;
+import com.kirpideleri.discordlogin.exceptions.NotFoundException;
+import com.kirpideleri.discordlogin.exceptions.RegisterUserException;
+import com.kirpideleri.discordlogin.exceptions.UnregisterUserException;
 
 import java.util.UUID;
 

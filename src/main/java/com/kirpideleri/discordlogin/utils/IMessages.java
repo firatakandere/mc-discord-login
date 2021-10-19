@@ -1,4 +1,4 @@
-package github.fakandere.discordlogin.utils;
+package com.kirpideleri.discordlogin.utils;
 
 public interface IMessages {
     String getDiscordRegistrationSuccess(final String discordUserID);
