@@ -87,6 +87,7 @@ public class DiscordLoginPlugin extends JavaPlugin
         }
 
         jdaBuilder.setAutoReconnect(true);
+        jdaBuilder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGE_REACTIONS);
 
         try {
             jda = jdaBuilder.build();
