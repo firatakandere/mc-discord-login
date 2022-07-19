@@ -9,7 +9,7 @@ import com.kirpideleri.discordlogin.exceptions.UnregisterUserException;
 import net.dv8tion.jda.api.entities.Activity;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -1,3 +1,4 @@
 name: DiscordLogin
 version: 0.1
 main: com.kirpideleri.discordlogin.DiscordLoginPlugin
+api-version: '1.16'
