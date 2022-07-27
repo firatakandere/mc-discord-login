@@ -12,4 +12,4 @@
 - [x] Who's online command for Discord.
 - [x] Show # of online users / total capacity on Discord Bot's description.
 - [ ] Add configuration for what should be prevented.
-- [ ] Bidirectional communication.
+- [x] Bidirectional communication.

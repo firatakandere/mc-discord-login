@@ -19,6 +19,8 @@ public class Messages implements IMessages {
     private final String DISCORD_UNREGISTRATION_FAILURE = "Discord.Unregistration.Failure";
     private final String DISCORD_UNREGISTRATION_NOT_FOUND = "Discord.Unregistration.NotFound";
 
+    private final String DISCORD_CANNOT_SEE_COMMAND_CHANNEL = "Discord.Login.CannotSeeCommandChannel";
+
     private final String DISCORD_NO_ONLINE_USERS = "Discord.NoOnlineUsers";
 
     private final String DISCORD_LOGIN_MESSAGE = "Discord.Login.Message";
@@ -39,6 +41,7 @@ public class Messages implements IMessages {
         ymlConfig.addDefault(DISCORD_UNREGISTRATION_FAILURE, "Unregister has failed. Please contact server admin.");
         ymlConfig.addDefault(DISCORD_UNREGISTRATION_NOT_FOUND, "User registration for {{username}} has not been found.");
         ymlConfig.addDefault(SERVER_TIMEOUT_FAILURE, "You have failed to register/login within allowed timeframe.");
+        ymlConfig.addDefault(DISCORD_CANNOT_SEE_COMMAND_CHANNEL, "You are not able to see commands channel, therefore you cannot login.");
         ymlConfig.options().copyDefaults(true);
         try {
             ymlConfig.save(messagesFile);
@@ -79,6 +82,10 @@ public class Messages implements IMessages {
         return ymlConfig.getString(DISCORD_LOGIN_MESSAGE)
                 .replace("{{servername}}", serverName)
                 .replace("{{ip}}", joinedIpAddress);
+    }
+
+    public String getCannotSeeCommandChannelMessage() {
+        return ymlConfig.getString(DISCORD_CANNOT_SEE_COMMAND_CHANNEL);
     }
 
     public String getDiscordNoOnlineUsers() { return ymlConfig.getString(DISCORD_NO_ONLINE_USERS); }

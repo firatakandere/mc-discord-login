@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.kirpideleri.discordlogin.commands.discord.RegisterCommand;
 import com.kirpideleri.discordlogin.commands.discord.UnregisterCommand;
 import com.kirpideleri.discordlogin.commands.discord.WhoIsOnlineCommand;
+import com.kirpideleri.discordlogin.listeners.PlayerChatListener;
 import com.kirpideleri.discordlogin.utils.AccountManager;
 import com.kirpideleri.discordlogin.utils.IConfig;
 import com.kirpideleri.discordlogin.listeners.DiscordListener;
@@ -42,6 +43,9 @@ public class DiscordLoginPlugin extends JavaPlugin
     PreventionListener preventionListener;
 
     @Inject
+    PlayerChatListener playerChatListener;
+
+    @Inject
     WhoIsOnlineCommand whoisonlineCommand;
 
     @Inject
@@ -72,6 +76,10 @@ public class DiscordLoginPlugin extends JavaPlugin
     private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(this.preventionListener, this);
         Bukkit.getPluginManager().registerEvents(this.playerJoinListener, this);
+
+        if (config.getDiscordCommunicationChannelID().isEmpty() == false) {
+            Bukkit.getPluginManager().registerEvents(this.playerChatListener, this);
+        }
 
         discordListener.addCommand("register", this.registerCommand);
         discordListener.addCommand("unregister", this.unregisterCommand);

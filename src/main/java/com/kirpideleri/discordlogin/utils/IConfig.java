@@ -8,6 +8,7 @@ public interface IConfig {
     String getDiscordBotGuildID();
     String getDiscordCommandPrefix();
     String getDiscordCommandChannelID();
+    String getDiscordCommunicationChannelID();
     String getDiscordButtonsAccept();
     String getDiscordButtonsReject();
     Set<String> getServerCommandWhitelist();

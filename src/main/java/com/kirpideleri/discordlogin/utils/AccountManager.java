@@ -7,6 +7,7 @@ import com.kirpideleri.discordlogin.exceptions.RegisterUserException;
 import com.kirpideleri.discordlogin.DiscordLoginPlugin;
 import com.kirpideleri.discordlogin.exceptions.UnregisterUserException;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Member;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -15,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -136,9 +138,16 @@ public class AccountManager implements IAccountManager {
     private void handleLogin(final Player p) throws NotFoundException {
         final String discordID = userRepository.getDiscordID(p.getUniqueId());
 
-        // Make sure user is still part of Discord guild
+        // Make sure user can see Discord Command Channel
         try {
-            plugin.jda.getGuildById(config.getDiscordBotGuildID()).retrieveMemberById(discordID).complete();
+            boolean canSeeCommandChannel = plugin.jda.getTextChannelById(config.getDiscordCommandChannelID()).getMembers().stream().anyMatch(x -> x.getId().equals(discordID));
+
+            if (!canSeeCommandChannel) {
+                plugin.jda.openPrivateChannelById(discordID).queue(privateChannel -> {
+                    privateChannel.sendMessage(messages.getCannotSeeCommandChannelMessage()).queue();
+                });
+                return;
+            }
         } catch (Exception ex) {
             return;
         }

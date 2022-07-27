@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.react.PrivateMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,27 +43,16 @@ public class DiscordListener extends ListenerAdapter {
             return; // Make sure guild ids match
         }
 
-        if (!e.getChannel().getId().equals(config.getDiscordCommandChannelID())) {
-            return; // Make sure correct channel is used.
+        if (e.getChannel().getId().equals(config.getDiscordCommandChannelID())) {
+            onMessageToCommandChannel(e);
+            return;
         }
 
-        final String prefix = config.getDiscordCommandPrefix();
-        final String message = e.getMessage().getContentDisplay().trim();
-
-        if (!message.startsWith(prefix)) {
-            return; // Skip if message does not start with prefix.
-        }
-
-        final String[] words = message.split(" ");
-        final String commandName = words[0].substring(1);
-
-        if (!commands.containsKey(commandName))
+        if (e.getChannel().getId().equals(config.getDiscordCommunicationChannelID()))
         {
-            return; // Ignore undefined commands;
+            onMessageToCommunicationChannel(e);
+            return;
         }
-
-        final String[] args = Arrays.copyOfRange(words, 1, words.length);
-        commands.get(commandName).execute(e, args);
     }
 
     @Override
@@ -82,5 +72,31 @@ public class DiscordListener extends ListenerAdapter {
         } catch (NotFoundException | UnregisterUserException ex) {
             Bukkit.getLogger().log(Level.WARNING, "Could not unregister a player that left Discord guild.", ex);
         }
+    }
+
+    private void onMessageToCommandChannel(final GuildMessageReceivedEvent e)
+    {
+        final String prefix = config.getDiscordCommandPrefix();
+        final String message = e.getMessage().getContentDisplay().trim();
+
+        if (!message.startsWith(prefix)) {
+            return; // Skip if message does not start with prefix.
+        }
+
+        final String[] words = message.split(" ");
+        final String commandName = words[0].substring(1);
+
+        if (!commands.containsKey(commandName))
+        {
+            return; // Ignore undefined commands;
+        }
+
+        final String[] args = Arrays.copyOfRange(words, 1, words.length);
+        commands.get(commandName).execute(e, args);
+    }
+
+    private void onMessageToCommunicationChannel(final GuildMessageReceivedEvent e)
+    {
+        Bukkit.broadcastMessage(ChatColor.RED + e.getAuthor().getName() + ":" + ChatColor.WHITE + " " + e.getMessage().getContentStripped());
     }
 }
