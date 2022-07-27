@@ -13,3 +13,6 @@
 - [x] Show # of online users / total capacity on Discord Bot's description.
 - [ ] Add configuration for what should be prevented.
 - [x] Bidirectional communication.
+- [ ] Add setup/usage instructions (ie. Wiki)
+- [ ] Optional registration requirement to communicate from Discord.
+- [ ] Display both DC and MC (if available) nickname in communication.
